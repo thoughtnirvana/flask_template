@@ -1,0 +1,8 @@
+# Task queue configuration.
+queue:
+- name: default
+  rate: 50/s
+  retry_parameters:
+    task_retry_limit: 10 
+    task_age_limit: 60s 
+

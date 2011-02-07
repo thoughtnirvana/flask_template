@@ -1,0 +1,50 @@
+/* Variables */
+@darkgray: #32435c;
+@silver: #f9f9f9;
+@light-blue: #37b7ea;
+@blackish: #333333;
+@grayish: #ccc;
+@error-red: #92000a;
+@lime: #8cca12;
+@lime-dark: #66a300;
+@orange: #f7a300;
+@orange-dark: #ff7400;
+
+
+/* Mixins */
+
+.border-radius (@radius: 4px) {
+  border-radius: @radius;
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+}
+
+.box-shadow(@x, @y, @blur, @spread, @color) {
+    @val: @x @y @blur @spread @color;
+
+    box-shadow: @val;
+    -webkit-box-shadow: @val;
+    -moz-box-shadow: @val;
+    -o-box-shadow: @val;
+}
+
+.inner-box-shadow(@x, @y, @blur, @spread, @color) {
+    @val: inset @x @y @blur @spread @color;
+
+    box-shadow: @val;
+    -webkit-box-shadow: @val;
+    -moz-box-shadow: @val;
+    -o-box-shadow: @val;
+}
+
+.min-height(@height) {
+    min-height: @height;
+    height:auto !important;
+    height: @height;
+}
+
+/* Less rules */
+
+a[href], input[type='submit'], input[type='image'], label[for], select, button, .pointer {
+       cursor: pointer;
+}

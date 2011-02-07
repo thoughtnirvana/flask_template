@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+
+        <title>{% block title %}{% endblock %}</title>
+        {% block meta_tags %}{% endblock %}
+
+        <link rel="stylesheet" type="text/css" href="/static/reset.css" />
+        <link rel="stylesheet/less" type="text/css" href="{{ static_path }}/base.less" />
+
+        <style>{% block styles %}{% endblock %}</style>
+
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <script type="text/javascript" src="/static/less.js"></script>
+        <script type="text/javascript" src="{{ static_path }}/base.js"></script>
+
+        {% block script_inc %}{% endblock %}
+
+        <script type="text/javascript">
+            $(function() {
+                {% block inline_scripts %}{% endblock %}
+                    });
+        </script>
+
+
+    </head>
+
+    <body>
+
+        {% block body %}
+
+            <div id="header">
+                {% block header %}
+                {% endblock %}
+            </div>
+
+
+            <div id="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+            <div id="footer">
+                {% block footer  %}
+                {% endblock %}
+            </div>
+
+        {% endblock %}
+    </body>
+</html>
