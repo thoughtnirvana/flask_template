@@ -1,6 +1,0 @@
-Flask==0.6.1
-## The following requirements were added by pip --freeze:
-Jinja2==2.5.5
-Werkzeug==0.6.2
-distribute==0.6.15
-wsgiref==0.1.2

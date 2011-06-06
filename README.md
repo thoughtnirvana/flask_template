@@ -1,3 +1,1 @@
-### TasteBuddy API
-
-Internal API for tastebuddy app.
+#### Simple flask template.
