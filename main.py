@@ -14,32 +14,35 @@ import config
 import config.urls as urls
 import config.settings as settings
 
-def init():
+def init(basic_app=False):
     """
     Sets up flask application object `app` and returns it.
+    If `basic_app` is true, it creates the app and the db object.
+    Mainly useful for using models outside of the app.
     """
     # Instantiate main app, load configs, register modules, set
     # url patterns and return the `app` object.
     app = Flask(__name__)
-    app.config.from_object('config.settings')
-    # Other initializations.
-    for fn, values in [(set_middlewares, getattr(settings, 'MIDDLEWARES', None)),
-                       (set_blueprints, getattr(settings, 'BLUEPRINTS', None)),
-                       (set_before_handlers, getattr(settings, 'BEFORE_REQUESTS', None)),
-                       (set_after_handlers, getattr(settings, 'AFTER_REQUESTS', None)),
-                       (set_log_handlers, getattr(settings, 'LOG_HANDLERS', None)),
-                       (set_context_processors, getattr(settings, 'CONTEXT_PROCESSORS', None)),
-                       (set_template_filters, getattr(settings, 'TEMPLATE_FILTERS', None))]:
-        if values:
-            fn(app, values)
+    if not basic_app:
+        app.config.from_object('config.settings')
+        # Other initializations.
+        for fn, values in [(set_middlewares, getattr(settings, 'MIDDLEWARES', None)),
+                        (set_blueprints, getattr(settings, 'BLUEPRINTS', None)),
+                        (set_before_handlers, getattr(settings, 'BEFORE_REQUESTS', None)),
+                        (set_after_handlers, getattr(settings, 'AFTER_REQUESTS', None)),
+                        (set_log_handlers, getattr(settings, 'LOG_HANDLERS', None)),
+                        (set_context_processors, getattr(settings, 'CONTEXT_PROCESSORS', None)),
+                        (set_template_filters, getattr(settings, 'TEMPLATE_FILTERS', None))]:
+            if values:
+                fn(app, values)
+        # URL rules.
+        urls.set_urls(app)
+        #: Wrap the `app` with `Babel` for i18n.
+        Babel(app)
+        Environment(app)
+        config.cache = Cache(app)
     # Init SQLAlchemy wrapper.
     config.db = SQLAlchemy(app)
-    # URL rules.
-    urls.set_urls(app)
-    #: Wrap the `app` with `Babel` for i18n.
-    Babel(app)
-    Environment(app)
-    config.cache = Cache(app)
     return app
 
 def set_middlewares(app, middlewares):

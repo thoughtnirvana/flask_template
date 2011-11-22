@@ -1,5 +1,6 @@
 flask
 flask-sqlalchemy
+flask-wtf
 flask-babel
 flask-cache
 flask-assets
