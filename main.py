@@ -27,12 +27,12 @@ def init(basic_app=False):
         app.config.from_object('config.settings')
         # Other initializations.
         for fn, values in [(set_middlewares, getattr(settings, 'MIDDLEWARES', None)),
-                        (set_blueprints, getattr(settings, 'BLUEPRINTS', None)),
-                        (set_before_handlers, getattr(settings, 'BEFORE_REQUESTS', None)),
-                        (set_after_handlers, getattr(settings, 'AFTER_REQUESTS', None)),
-                        (set_log_handlers, getattr(settings, 'LOG_HANDLERS', None)),
-                        (set_context_processors, getattr(settings, 'CONTEXT_PROCESSORS', None)),
-                        (set_template_filters, getattr(settings, 'TEMPLATE_FILTERS', None))]:
+                           (set_blueprints, getattr(settings, 'BLUEPRINTS', None)),
+                           (set_before_handlers, getattr(settings, 'BEFORE_REQUESTS', None)),
+                           (set_after_handlers, getattr(settings, 'AFTER_REQUESTS', None)),
+                           (set_log_handlers, getattr(settings, 'LOG_HANDLERS', None)),
+                           (set_context_processors, getattr(settings, 'CONTEXT_PROCESSORS', None)),
+                           (set_template_filters, getattr(settings, 'TEMPLATE_FILTERS', None))]:
             if values:
                 fn(app, values)
         # URL rules.
