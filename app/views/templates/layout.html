@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+        <script>!window.jQuery && document.write(unescape('%3Cscript src="/static/js/jquery-1.7.min.js"%3E%3C/script%3E'))</script>
+
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/start/jquery-ui.css" type="text/css" media="all" />
+
+        {% assets filter="closure_js", output="js/packed.js",
+        "js/underscore.js", "js/underscore.string.js", "js/less.js" %}
+            <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+        {% endassets %}
+
+        {% block head  %}
+        {% endblock  %}
+    </head>
+
+    <body>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
