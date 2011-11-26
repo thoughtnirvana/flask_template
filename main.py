@@ -23,8 +23,8 @@ def init(basic_app=False):
     # Instantiate main app, load configs, register modules, set
     # url patterns and return the `app` object.
     app = Flask(__name__)
+    app.config.from_object('config.settings')
     if not basic_app:
-        app.config.from_object('config.settings')
         # Other initializations.
         for fn, values in [(set_middlewares, getattr(settings, 'MIDDLEWARES', None)),
                            (set_blueprints, getattr(settings, 'BLUEPRINTS', None)),
@@ -51,8 +51,22 @@ def set_middlewares(app, middlewares):
     """
     # Add middlewares.
     if middlewares:
-        for mware, args, kwargs in middlewares:
-            app.wsgi_app = mware(app.wsgi_app, *args, **kwargs)
+        for m in middlewares:
+            if isinstance(m, list) or isinstance(m, tuple):
+                if len(m) == 3:
+                    mware, args, kwargs = m
+                    new_mware = mware(app.wsgi_app, *args, **kwargs)
+                elif len(mware) == 2:
+                    mware, args = m
+                    if isinstance(args, dict):
+                        new_mware = mware(app.wsgi_app, **args)
+                    elif isinstance(args, list) or isinstance(args, tuple):
+                        new_mware = mware(app.wsgi_app, *args)
+                    else:
+                        new_mware = mware(app.wsgi_app, args)
+            else:
+                new_mware = m(app.wsgi_app)
+            app.wsgi_app = new_mware
 
 def set_blueprints(app, blueprints):
     """

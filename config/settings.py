@@ -30,7 +30,7 @@ MIDDLEWARES = [
     #: Emulate RESTFul API for client that dont' directly
     #: support REST.
     # (middleware, *args, **kwargs)
-    (MethodRewriteMiddleware, [], {}),
+    MethodRewriteMiddleware,
 ]
 
 #: Custom log handlers.
