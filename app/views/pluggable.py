@@ -7,11 +7,11 @@ class Pluggable(View):
         self.template_name = template_name
 
     def dispatch_request(self):
-        return render_template(self.template_name)
+        return render_template(self.template_name, name='pluggable')
 
 class Restful(MethodView):
     def __init__(self, template_name):
         self.template_name = template_name
 
     def get(self):
-        return render_template(self.template_name)
+        return render_template(self.template_name, name='restful')
