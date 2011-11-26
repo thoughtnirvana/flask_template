@@ -18,6 +18,13 @@ def deps_update():
     """
     local("pip install -r reqs --upgrade")
 
+def server():
+    """
+    Runs development server.
+    """
+    app = _make_app()
+    app.run()
+
 def run_tornado(port=8080):
     """
     Runs application under tornado.
@@ -33,11 +40,10 @@ def run_gevent(port=8080):
     _runner(runner, port)
 
 def _runner(runner, *args, **kwargs):
-    import main
     import werkzeug.serving
     import os
     environ = os.environ.get('FLASK_ENV')
-    app = main.init()
+    app = _make_app()
     if not environ or environ != 'prod':
         # Run with reloading.
         @werkzeug.serving.run_with_reloader
@@ -46,3 +52,10 @@ def _runner(runner, *args, **kwargs):
         run_server()
     else:
         runner.run_server(app, *args, **kwargs)
+
+def _make_app(basic_app=False):
+    """
+    Returns main wsgi app object.
+    """
+    import main
+    return main.init(basic_app)
