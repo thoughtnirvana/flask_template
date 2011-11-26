@@ -4,4 +4,6 @@ flask-wtf
 flask-babel
 flask-cache
 flask-assets
+flask-augment
+augment
 closure
