@@ -1,3 +1,9 @@
+import sys
+import os
+
+# Add current directory to path.
+sys.path.append(os.path.dirname(__file__))
+
 from fabric.api import local
 
 def test():
@@ -25,14 +31,14 @@ def server():
     app = _make_app()
     app.run()
 
-def run_tornado(port=8080):
+def run_tornado(port=5000):
     """
     Runs application under tornado.
     """
     import script.serve_app_tornado as runner
     _runner(runner, port)
 
-def run_gevent(port=8080):
+def run_gevent(port=5000):
     """
     Runs gevent server.
     """
