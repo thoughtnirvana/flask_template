@@ -10,6 +10,8 @@ routes = [
     'app.views.pluggable',
     ('/pluggable', ('Pluggable', dict(template_name='hello.html'))),
     ('/restful', ('Restful', dict(template_name='hello.html'))),
+    'app.views.longpoll',
+    ('/longpoll', 'longpoll', dict(methods=['GET', 'POST'])),
 ]
 
 
