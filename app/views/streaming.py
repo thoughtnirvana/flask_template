@@ -2,7 +2,7 @@ import datetime
 import gevent
 from flask import Response
 
-def longpoll():
+def streaming():
     def generate():
         yield ' ' * 1000
         yield "<html><body><h1>Current Time:</h1>"
