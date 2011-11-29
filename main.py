@@ -32,6 +32,7 @@ def init(basic_app=False):
                            (set_after_handlers, getattr(settings, 'AFTER_REQUESTS', None)),
                            (set_log_handlers, getattr(settings, 'LOG_HANDLERS', None)),
                            (set_context_processors, getattr(settings, 'CONTEXT_PROCESSORS', None)),
+                           (set_error_handlers, getattr(settings, 'ERROR_HANDLERS', None)),
                            (set_template_filters, getattr(settings, 'TEMPLATE_FILTERS', None))]:
             if values:
                 fn(app, values)
@@ -113,6 +114,13 @@ def set_context_processors(app, context_processors):
     """
     for fn in context_processors:
         fn = app.context_processor(fn)
+
+def set_error_handlers(app, error_handlers):
+    """
+    Sets error handlers.
+    """
+    for code, fn in error_handlers:
+        fn = app.errorhandler(code)(fn)
 
 if __name__ == '__main__':
     #: Create the `app` object via :func:`init`. Run the `app`

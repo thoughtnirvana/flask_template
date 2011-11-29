@@ -44,6 +44,10 @@ TEMPLATE_FILTERS = []
 #CONTEXT_PROCESSORS = [lambda: dict(user='rahul')]
 CONTEXT_PROCESSORS = []
 
+#: Error handlers for http and other arbitrary exceptions.
+#ERROR_HANDLERS = [(404, lambda error: ("Page not found", 404))]
+ERROR_HANDLERS = []
+
 # Load appropriate settings.
 environ = os.environ.get('FLASK_ENV')
 # Set environment specific settings.
