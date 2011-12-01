@@ -9,7 +9,7 @@ class MethodRewriteMiddleware(object):
     is re-written here.
     """
 
-    def __init__(self, app, input_name='method'):
+    def __init__(self, app, input_name='_method'):
         self.app = app
         self.input_name = input_name
 
