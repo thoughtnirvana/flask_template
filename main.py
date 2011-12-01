@@ -23,7 +23,7 @@ def init(basic_app=False):
     # Instantiate main app, load configs, register modules, set
     # url patterns and return the `app` object.
     app = Flask(__name__)
-    app.config.from_object('config.settings')
+    app.config.from_object(settings)
     if not basic_app:
         # Other initializations.
         for fn, values in [(set_middlewares, getattr(settings, 'MIDDLEWARES', None)),
