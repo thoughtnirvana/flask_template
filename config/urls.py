@@ -5,12 +5,13 @@ from werkzeug import import_string
 from flask import Blueprint
 
 routes = [
-    'app.views.hello',
+    'blueprints.app.views.hello',
     ('/hello', 'hello'),
-    'app.views.pluggable',
+    ('/ensure_args', 'test_ensure_args'),
+    'blueprints.app.views.pluggable',
     ('/pluggable', ('Pluggable', dict(template_name='hello.html'))),
     ('/restful', ('Restful', dict(template_name='hello.html'))),
-    'app.views.streaming',
+    'blueprints.app.views.streaming',
     ('/streaming', 'streaming'),
 ]
 
