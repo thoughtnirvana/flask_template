@@ -15,3 +15,6 @@ class Restful(MethodView):
 
     def get(self):
         return render_template(self.template_name, name='restful')
+
+    def _get_handler(self, errors):
+        return str(errors)

@@ -2,7 +2,7 @@
 General purpose decorators and other utilities for contract based programming, for the
 flask web framework.
 """
-import re, sys
+import re, sys, types
 from functools import wraps
 from collections import defaultdict
 
@@ -31,10 +31,15 @@ def _propogate_error(errors, handler=None, exception_type=AugmentError):
     else:
         raise exception_type(errors)
 
-def _get_error_handler(fn, error_handler):
-    if not error_handler:
-        mod = sys.modules[fn.__module__]
-        return getattr(mod, '_%s_handler' % fn.__name__)
+def _get_error_handler(fn):
+    error_handler = None
+    if getattr(fn, '__name__', None):
+        handler_name = '_%s_handler' % fn.__name__
+        if isinstance(fn, types.FunctionType):
+            mod = sys.modules[fn.__module__]
+            error_handler = getattr(mod, handler_name, None)
+        elif isinstance(fn, types.MethodType):
+            error_handler = getattr(fn.im_class, handler_name, None)
     return error_handler
 
 def ensure_args(storage=None, error_handler=None, check_blank=True, **rules):
@@ -45,7 +50,7 @@ def ensure_args(storage=None, error_handler=None, check_blank=True, **rules):
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):
-            handler = _get_error_handler(fn, error_handler)
+            handler = error_handler or _get_error_handler(fn)
             results = _check_args(rules, storage, check_blank)
             errors = _construct_errors(results, rules)
             if errors:
@@ -118,7 +123,7 @@ def ensure_one_of(storage=None, error_handler=None, exclusive=False, check_blank
     def decorator(fn):
         @wraps(fn)
         def wrapper(*args, **kwargs):
-            handler = _get_error_handler(fn, error_handler)
+            handler = error_handler or _get_error_handler(fn)
             results = _check_args(rules, storage, check_blank)
             errors = _construct_errors(results, rules)
             if errors:
