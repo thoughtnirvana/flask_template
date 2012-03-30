@@ -10,6 +10,8 @@ from flaskext.cache import Cache
 from flaskext.sqlalchemy import SQLAlchemy
 from flaskext.assets import Environment
 
+from slimish_jinja import SlimishExtension
+
 import config
 import config.urls as urls
 import config.settings as settings
@@ -42,6 +44,7 @@ def init(basic_app=False):
         Babel(app)
         Environment(app)
         config.cache = Cache(app)
+        app.jinja_env.add_extension(SlimishExtension)
     # Init SQLAlchemy wrapper.
     config.db = SQLAlchemy(app)
     return app
