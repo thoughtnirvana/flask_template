@@ -7,12 +7,11 @@ the resulting `app` object be used.
 from flask import Flask
 from flask import Blueprint
 from werkzeug import import_string
-from flaskext.babel import Babel
-from flaskext.cache import Cache
-from flaskext.sqlalchemy import SQLAlchemy
-from flaskext.assets import Environment
+from flask.ext.babel import Babel
+from flask.ext.cache import Cache
+from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.assets import Environment
 
-from slimish_jinja import SlimishExtension
 
 import config
 import config.urls as urls
@@ -46,7 +45,6 @@ def init(basic_app=False):
         Babel(app)
         Environment(app)
         config.cache = Cache(app)
-        app.jinja_env.add_extension(SlimishExtension)
     # Init SQLAlchemy wrapper.
     config.db = SQLAlchemy(app)
     return app

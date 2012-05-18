@@ -16,3 +16,4 @@ closure
 # Dev requirements
 pylint
 ipython
+ipdb

@@ -9,5 +9,9 @@ def set_trace():
     """
     from flask import current_app
     if not current_app.debug: return
-    import pdb
-    pdb.set_trace()
+    try:
+        import ipdb
+        ipdb.set_trace()
+    except ImportError:
+        import pdb
+        pdb.set_trace()
