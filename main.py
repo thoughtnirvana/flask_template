@@ -5,6 +5,8 @@ be run stand-alone as a flask application or it can be imported and
 the resulting `app` object be used.
 """
 from flask import Flask
+from flask import Blueprint
+from werkzeug import import_string
 from flaskext.babel import Babel
 from flaskext.cache import Cache
 from flaskext.sqlalchemy import SQLAlchemy
@@ -78,7 +80,22 @@ def set_blueprints(app, blueprints):
     """
     # Register blueprints.
     for blueprint in blueprints:
-        app.register_blueprint(blueprint)
+        url_prefix = None
+        if len(blueprint) == 2:
+            blueprint, url_prefix = blueprint
+        blueprint_name, blueprint_import_name = blueprint.split('.')[-1], blueprint
+        options = dict(static_folder='static', template_folder='templates')
+        if not url_prefix:
+            options['static_url_path'] = '/%s/static' % blueprint_name
+        blueprint_object = Blueprint(blueprint_name, blueprint_import_name, **options)
+        blueprint_routes = import_string('%s.urls:routes' % blueprint_import_name, silent=True)
+        if blueprint_routes:
+            urls.set_urls(blueprint_object, blueprint_routes)
+        # Can be mounted at specific prefix.
+        if url_prefix:
+            app.register_blueprint(blueprint_object, url_prefix=url_prefix)
+        else:
+            app.register_blueprint(blueprint_object)
 
 def set_before_handlers(app, before_handlers):
     """

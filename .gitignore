@@ -1,3 +1,4 @@
 *.pyc
 .webassets-cache/
 .ropeproject/
+venv/

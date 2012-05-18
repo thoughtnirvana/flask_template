@@ -1,10 +1,18 @@
+# Flask
 flask
+
+# Flask extensions
 flask-sqlalchemy
 flask-wtf
 flask-babel
 flask-cache
 flask-assets
 flask-augment
-slimish_jinja
 augment
+
+# Misc 3rd party
 closure
+
+# Dev requirements
+pylint
+ipython
